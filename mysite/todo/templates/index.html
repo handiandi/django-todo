@@ -6,33 +6,49 @@
         <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="{% static 'js/todo.js' %}"></script>
+        <script src="{% static 'js/js.cookie.js' %}"></script>
     </head>
     <body>
         <center><h1>To-do</h1>
-
-        {% for todo in todos %}
+        <div class="container" name=undone-to-do-container>
+        {% for todo in todos_undone %}
+                <div class="container" name="to-do-container">
+                  <div class="row align-middle">
+                    <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;">{{ todo.title }}</div>
+                    <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;">{{ todo.description }}</div>
+                    <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;"><input type="checkbox" id="{{ todo.title }}" name="undone"></div>
+                  </div>
+                </div>
             
-
-
-            <div class="container" name="to-do-container">
-              <div class="row align-middle">
-                <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;">{{ todo.title }}</div>
-                <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;">{{ todo.description }}</div>
-                <div class="col-sm align-middle" style="background-color: #f0f0f0; height: 50px;"><input type="checkbox" id="{{ todo.title }}" name="undone"></div>
-              </div>
-            </div>
-            
-
 
         {% empty %}
-            <p class="lead">
-                No To-dos added yet! Add one!
+            <p class="lead" name="p no todos">
+                No ongoing To-dos added yet! Add one!
             </p>
         {% endfor %}
+        </div>
+        {% for todo in todos_done %}
+            {% if forloop.counter0 == 0 %}
+                    <br><br>
+                    <div class="container" name=done-to-do-container>
+                    <p class="lead">
+                        Finished To-dos
+                    </p>
+            {% endif %}
+
+                <div class="container" name="to-do-container">
+                      <div class="row align-middle">
+                        <div class="col-sm align-middle" style="background-color: #5cb85c; height: 50px;">{{ todo.title }}</div>
+                        <div class="col-sm align-middle" style="background-color: #5cb85c; height: 50px;">{{ todo.description }}</div>
+                        <div class="col-sm align-middle" style="background-color: #5cb85c; height: 50px;"><input type="checkbox" id="{{ todo.title }}" name="undone"></div>
+                      </div>
+                </div>
+        {% endfor %}
+        </div> <!-- end 'done-to-do-container' -->
 
         <br> 
-        <button type="button" class="btn btn-outline-success" id="check_btn">Done</button>
-        <button type="button" class="btn btn-outline-danger" id="uncheck_btn">Un-done</button>
+        <button type="button" class="btn btn-outline-success" id="check_btn">Mark as Done/Un-done</button>
+        <!-- <button type="button" class="btn btn-outline-danger" id="uncheck_btn">Un-done</button> -->
         {% csrf_token %}
         </center>
         <br><br>
