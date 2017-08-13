@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.views.decorators.csrf
-from django.http import HttpResponse
+from django.http import HttpResponse 
 from todo.models import todo
 from django.db.models import Case, Value, When
 from django.core import serializers
